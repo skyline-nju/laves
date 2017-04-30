@@ -50,26 +50,19 @@ class UnitCell:
         else:
             for x0, y0, z0 in self.atom:
                 for_each_atom(x0, y0, z0)
-        return r
+        return np.array(r)
 
-    def to_xyz(self, r, file="test.xyz"):
+    def to_xyz(self, r, file="test.xyz", pType="A"):
         with open(file, "w") as f:
             f.write("%d\n" % len(r))
             f.write("just for test\n")
             for x, y, z in r:
-                f.write("A\t%g\t%g\t%g\n" % (x, y, z))
+                f.write("%s\t%g\t%g\t%g\n" % (pType, x, y, z))
 
+
+SC = UnitCell()
+BCC = UnitCell([0.5, 0.5, 0.5])
+FCC = UnitCell([[0.5, 0.5, 0], [0.5, 0, 0.5], [0, 0.5, 0.5]])
 
 if __name__ == "__main__":
     os.chdir("data")
-    SC = UnitCell()
-    r = SC.expand(3, 3, 3)
-    SC.to_xyz(r, "SC.xyz")
-
-    BCC = UnitCell([0.5, 0.5, 0.5])
-    r = BCC.expand(3, 3, 3)
-    BCC.to_xyz(r, "BCC.xyz")
-
-    FCC = UnitCell([[0.5, 0.5, 0], [0.5, 0, 0.5], [0, 0.5, 0.5]])
-    r = FCC.expand(3, 3, 3)
-    FCC.to_xyz(r, "FCC.xyz")
